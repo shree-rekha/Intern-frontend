@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Management Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">💰 FinanceTracker</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link active">Dashboard</a>
+                <a href="income.html" class="nav-link">Income</a>
+                <a href="expenses.html" class="nav-link">Expenses</a>
+                <a href="salary.html" class="nav-link">Salary</a>
+                <a href="view.html" class="nav-link">View Records</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="hero">
+                <h2>Welcome to Your Financial Dashboard</h2>
+                <p>Track your income, expenses, and salary payments all in one place</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-content">
+                        <h3>Total Income</h3>
+                        <p class="stat-number" id="totalIncome">₹0.00</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📉</div>
+                    <div class="stat-content">
+                        <h3>Total Expenses</h3>
+                        <p class="stat-number" id="totalExpenses">₹0.00</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💳</div>
+                    <div class="stat-content">
+                        <h3>Salary Payments</h3>
+                        <p class="stat-number" id="totalSalary">₹0.00</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <h3>Net Balance</h3>
+                        <p class="stat-number" id="netBalance">₹0.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h3>Quick Actions</h3>
+                <div class="actions-grid">
+                    <a href="income.html" class="action-card">
+                        <div class="action-icon">➕</div>
+                        <h4>Add Income</h4>
+                        <p>Record new income entry</p>
+                    </a>
+                    <a href="expenses.html" class="action-card">
+                        <div class="action-icon">➖</div>
+                        <h4>Add Expense</h4>
+                        <p>Track your expenses</p>
+                    </a>
+                    <a href="salary.html" class="action-card">
+                        <div class="action-icon">💼</div>
+                        <h4>Add Salary</h4>
+                        <p>Record salary payments</p>
+                    </a>
+                    <a href="view.html" class="action-card">
+                        <div class="action-icon">📊</div>
+                        <h4>View Records</h4>
+                        <p>See all transactions</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script>
+        // Load dashboard data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboardData();
+        });
+
+        async function loadDashboardData() {
+            try {
+                // These would be actual API calls in a real application
+                // For now, we'll show placeholder data
+                document.getElementById('totalIncome').textContent = '₹25,000.00';
+                document.getElementById('totalExpenses').textContent = '₹8,500.00';
+                document.getElementById('totalSalary').textContent = '₹12,000.00';
+                document.getElementById('netBalance').textContent = '₹16,500.00';
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+    </script>
+</body>
+</html>

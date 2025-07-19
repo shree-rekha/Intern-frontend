@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Records - Financial Management</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">💰 FinanceTracker</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="income.html" class="nav-link">Income</a>
+                <a href="expenses.html" class="nav-link">Expenses</a>
+                <a href="salary.html" class="nav-link">Salary</a>
+                <a href="view.html" class="nav-link active">View Records</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="view-header">
+                <h2>Financial Records</h2>
+                <div class="view-filters">
+                    <select id="recordType" class="form-select">
+                        <option value="all">All Records</option>
+                        <option value="income">Income</option>
+                        <option value="expenses">Expenses</option>
+                        <option value="salary">Salary</option>
+                    </select>
+                    <input type="date" id="fromDate" class="form-input" placeholder="From Date">
+                    <input type="date" id="toDate" class="form-input" placeholder="To Date">
+                    <button id="filterBtn" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="income">Income Records</button>
+                <button class="tab-btn" data-tab="expenses">Expense Records</button>
+                <button class="tab-btn" data-tab="salary">Salary Records</button>
+            </div>
+
+            <div id="income" class="tab-content active">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Received By</th>
+                                <th>Received On</th>
+                                <th>Sender</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody id="incomeTableBody">
+                            <tr>
+                                <td colspan="8" class="no-data">No income records found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="expenses" class="tab-content">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Spent By</th>
+                                <th>Spent On</th>
+                                <th>Mode</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expensesTableBody">
+                            <tr>
+                                <td colspan="8" class="no-data">No expense records found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="salary" class="tab-content">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Payment Type</th>
+                                <th>Amount</th>
+                                <th>Payment To</th>
+                                <th>Payment Date</th>
+                                <th>Mode</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salaryTableBody">
+                            <tr>
+                                <td colspan="7" class="no-data">No salary records found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+                
+                // Load data for the selected tab
+                loadTabData(tabId);
+            });
+        });
+
+        // Filter functionality
+        document.getElementById('filterBtn').addEventListener('click', function() {
+            const activeTab = document.querySelector('.tab-content.active').id;
+            loadTabData(activeTab);
+        });
+
+        // Load data for tabs
+        async function loadTabData(tabType) {
+            try {
+                // This would be actual API calls in a real application
+                // For now, we'll show sample data
+                const sampleData = getSampleData(tabType);
+                populateTable(tabType, sampleData);
+            } catch (error) {
+                console.error(`Error loading ${tabType} data:`, error);
+            }
+        }
+
+        function getSampleData(type) {
+            const samples = {
+                income: [
+                    { sno: 1, category: 'Course', amount: 15000, receivedBy: 'John Doe', receivedOn: '2024-01-15', sender: 'ABC Corp', status: 'Success', createdAt: '2024-01-15 10:30:00' }
+                ],
+                expenses: [
+                    { sno: 1, category: 'Travel', amount: 2500, spentBy: 'John Doe', spentOn: '2024-01-10', mode: 'UPI', status: 'Success', createdAt: '2024-01-10 14:20:00' }
+                ],
+                salary: [
+                    { sno: 1, paymentType: 'Salary', amount: 50000, paymentTo: 'Employee', paymentDate: '2024-01-01', mode: 'Bank Transfer', createdAt: '2024-01-01 09:00:00' }
+                ]
+            };
+            return samples[type] || [];
+        }
+
+        function populateTable(type, data) {
+            const tbody = document.getElementById(`${type}TableBody`);
+            
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="${type === 'salary' ? 7 : 8}" class="no-data">No ${type} records found</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            data.forEach(record => {
+                if (type === 'income') {
+                    html += `
+                        <tr>
+                            <td>${record.sno}</td>
+                            <td>${record.category}</td>
+                            <td>₹${record.amount}</td>
+                            <td>${record.receivedBy}</td>
+                            <td>${record.receivedOn}</td>
+                            <td>${record.sender}</td>
+                            <td><span class="status-badge status-${record.status.toLowerCase()}">${record.status}</span></td>
+                            <td>${record.createdAt}</td>
+                        </tr>
+                    `;
+                } else if (type === 'expenses') {
+                    html += `
+                        <tr>
+                            <td>${record.sno}</td>
+                            <td>${record.category}</td>
+                            <td>₹${record.amount}</td>
+                            <td>${record.spentBy}</td>
+                            <td>${record.spentOn}</td>
+                            <td>${record.mode}</td>
+                            <td><span class="status-badge status-${record.status.toLowerCase()}">${record.status}</span></td>
+                            <td>${record.createdAt}</td>
+                        </tr>
+                    `;
+                } else if (type === 'salary') {
+                    html += `
+                        <tr>
+                            <td>${record.sno}</td>
+                            <td>${record.paymentType}</td>
+                            <td>₹${record.amount}</td>
+                            <td>${record.paymentTo}</td>
+                            <td>${record.paymentDate}</td>
+                            <td>${record.mode}</td>
+                            <td>${record.createdAt}</td>
+                        </tr>
+                    `;
+                }
+            });
+            tbody.innerHTML = html;
+        }
+
+        // Load income data by default
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTabData('income');
+        });
+    </script>
+</body>
+</html>

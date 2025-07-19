@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expenses - Financial Management</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">💰 FinanceTracker</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="income.html" class="nav-link">Income</a>
+                <a href="expenses.html" class="nav-link active">Expenses</a>
+                <a href="salary.html" class="nav-link">Salary</a>
+                <a href="view.html" class="nav-link">View Records</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="form-header">
+                <h2>Add Expense Entry</h2>
+                <p>Track your expenses below</p>
+            </div>
+
+            <div class="form-container">
+                <form id="expenseForm" class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expenseCategory" class="form-label">Expense Category *</label>
+                            <select id="expenseCategory" name="expense_cat" class="form-select" required>
+                                <option value="">Select Category</option>
+                                <option value="1">Travel</option>
+                                <option value="2">Food</option>
+                                <option value="3">Stationery</option>
+                                <option value="4">Banking</option>
+                                <option value="5">Others</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount" class="form-label">Amount *</label>
+                            <input type="number" id="amount" name="amount" class="form-input" step="0.01" min="0" max="99999999.99" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categoryRemarks" class="form-label">Category Remarks</label>
+                        <input type="text" id="categoryRemarks" name="expense_cat_remarks" class="form-input" maxlength="200">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="spentBy" class="form-label">Spent By</label>
+                            <input type="text" id="spentBy" name="spent_by" class="form-input" maxlength="50">
+                        </div>
+                        <div class="form-group">
+                            <label for="spentOn" class="form-label">Spent On</label>
+                            <input type="date" id="spentOn" name="spent_on" class="form-input">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="spentThrough" class="form-label">Transaction Mode</label>
+                            <input type="text" id="spentThrough" name="spent_through" class="form-input" maxlength="50" placeholder="e.g., Cash, UPI, Card">
+                        </div>
+                        <div class="form-group">
+                            <label for="status" class="form-label">Status</label>
+                            <select id="status" name="status" class="form-select">
+                                <option value="1">Success</option>
+                                <option value="2">Failed</option>
+                                <option value="3">Wrong Entry</option>
+                                <option value="4">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="remarks" class="form-label">General Remarks</label>
+                        <textarea id="remarks" name="remarks" class="form-textarea" rows="3" maxlength="20"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+                        <button type="submit" class="btn btn-primary">Add Expense</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/expenses.js"></script>
+</body>
+</html>

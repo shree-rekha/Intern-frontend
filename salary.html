@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Salary - Financial Management</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">💰 FinanceTracker</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="income.html" class="nav-link">Income</a>
+                <a href="expenses.html" class="nav-link">Expenses</a>
+                <a href="salary.html" class="nav-link active">Salary</a>
+                <a href="view.html" class="nav-link">View Records</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="form-header">
+                <h2>Add Salary Entry</h2>
+                <p>Record salary and payment details</p>
+            </div>
+
+            <div class="form-container">
+                <form id="salaryForm" class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="paymentType" class="form-label">Payment Type *</label>
+                            <select id="paymentType" name="payment_type" class="form-select" required>
+                                <option value="">Select Payment Type</option>
+                                <option value="1">Shares</option>
+                                <option value="2">Salary</option>
+                                <option value="3">Others</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount" class="form-label">Amount *</label>
+                            <input type="number" id="amount" name="amount" class="form-input" step="0.01" min="0" max="99999999.99" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paymentTypeRemarks" class="form-label">Payment Type Remarks</label>
+                        <input type="text" id="paymentTypeRemarks" name="payment_type_remarks" class="form-input" maxlength="200">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="paymentToWhom" class="form-label">Payment To Whom</label>
+                            <input type="text" id="paymentToWhom" name="payment_to_whom" class="form-input" maxlength="50">
+                        </div>
+                        <div class="form-group">
+                            <label for="spentDate" class="form-label">Payment Date</label>
+                            <input type="date" id="spentDate" name="spent_date" class="form-input">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paymentThrough" class="form-label">Payment Mode</label>
+                        <input type="text" id="paymentThrough" name="payment_through" class="form-input" maxlength="50" placeholder="e.g., Bank Transfer, Cash, Cheque">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="remarks" class="form-label">General Remarks</label>
+                        <textarea id="remarks" name="remarks" class="form-textarea" rows="3" maxlength="20"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+                        <button type="submit" class="btn btn-primary">Add Salary Entry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/salary.js"></script>
+</body>
+</html>
