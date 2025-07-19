@@ -3,16 +3,18 @@ class AuthManager {
     constructor() {
         this.tokenKey = 'finance_auth_token';
         this.userKey = 'finance_user_data';
-        this.init();
+        // Only initialize auth checks on auth pages or when explicitly needed
+        if (this.isAuthPage()) {
+            this.init();
+        }
     }
 
     init() {
         // Check if user is already logged in
         if (this.isLoggedIn() && this.isAuthPage()) {
             window.location.href = 'index.html';
-        } else if (!this.isLoggedIn() && !this.isAuthPage()) {
-            window.location.href = 'login.html';
         }
+        // Remove the automatic redirect to login for non-auth pages
     }
 
     isAuthPage() {
