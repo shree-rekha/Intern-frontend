@@ -3,6 +3,7 @@ const API_BASE_URL = 'http://localhost:3000/api'; // Change this to your backend
 
 // API Endpoints
 const API_ENDPOINTS = {
+    auth: `${API_BASE_URL}/auth`,
     income: `${API_BASE_URL}/income`,
     expenses: `${API_BASE_URL}/expenses`,
     salary: `${API_BASE_URL}/salary`,
@@ -19,6 +20,15 @@ class FinanceAPI {
     // Generic API call method
     async apiCall(url, options = {}) {
         try {
+            // Add auth token to headers if available
+            const token = localStorage.getItem('finance_auth_token');
+            if (token) {
+                options.headers = {
+                    ...options.headers,
+                    'Authorization': `Bearer ${token}`
+                };
+            }
+
             const response = await fetch(url, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,6 +46,31 @@ class FinanceAPI {
             console.error('API call failed:', error);
             throw error;
         }
+    }
+
+    // Authentication API methods
+    async login(loginData) {
+        return this.apiCall(`${API_ENDPOINTS.auth}/login`, {
+            method: 'POST',
+            body: JSON.stringify(loginData)
+        });
+    }
+
+    async register(userData) {
+        return this.apiCall(`${API_ENDPOINTS.auth}/register`, {
+            method: 'POST',
+            body: JSON.stringify(userData)
+        });
+    }
+
+    async logout() {
+        return this.apiCall(`${API_ENDPOINTS.auth}/logout`, {
+            method: 'POST'
+        });
+    }
+
+    async verifyToken() {
+        return this.apiCall(`${API_ENDPOINTS.auth}/verify`);
     }
 
     // Income API methods
